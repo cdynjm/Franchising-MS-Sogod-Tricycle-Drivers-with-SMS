@@ -74,6 +74,10 @@ class RegisterController extends Controller
 
         $timestamp = Carbon::now();
 
+        $validIDExtension = $request->file('validID')->getClientOriginalExtension();
+        $validIDFileName = \Str::slug($request->username.'-valid-id-'.$timestamp).'.'.$validIDExtension;
+        $transferfile = $request->validID->storeAs('public/files/', $validIDFileName); 
+
         $clearanceFrontExtension = $request->file('clearanceFront')->getClientOriginalExtension();
         $clearanceFrontFileName = \Str::slug($request->username.'-clearance-front-'.$timestamp).'.'.$clearanceFrontExtension;
         $transferfile = $request->clearanceFront->storeAs('public/files/', $clearanceFrontFileName); 
@@ -109,6 +113,7 @@ class RegisterController extends Controller
             'motorNumber' => strtoupper($request->motorNumber),
             'chassisNumber' => strtoupper($request->chassisNumber),
             'plateNumber' => strtoupper($request->plateNumber),
+            'validID' => $validIDFileName,
             'clearanceFront' => $clearanceFrontFileName,
             'clearanceBack' => $clearanceBackFileName,
             'officialReceipt' => $officialReceiptFileName,

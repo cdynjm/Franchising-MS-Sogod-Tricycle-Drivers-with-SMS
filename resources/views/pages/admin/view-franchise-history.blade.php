@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        @include('data.admin.view-franchise-history-data')
+                                        @livewire('view-franchise-history-data', ['accountID' => $aes->encrypt($account->id)])
                                     </div>
                                 </div>
                                 </div>

@@ -1,3 +1,22 @@
+@php
+
+    use Illuminate\Support\Str;
+    use App\Http\Controllers\AESCipher;
+    use App\Models\Franchise;
+    use App\Models\SMSToken;
+    use Carbon\Carbon;
+
+    $smsToken = SMSToken::first();
+
+    $aes = new AESCipher();
+
+    $notif = Franchise::whereIn('status', [0, 1, 3, 4]);
+
+@endphp
+
+@extends('modals.profile-modal')
+@extends('modals.admin.update.sms-token-modal')
+
 <header id="page-topbar" class="isvertical-topbar">
     <div class="navbar-header">
         <div class="d-flex">
@@ -38,12 +57,12 @@
 
             
 
-          
+            @if(Auth::user()->role == 1)
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown-v"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="bx bx-bell icon-sm align-middle"></i>
-                    <span class="noti-dot bg-danger rounded-pill">4</span>
+                    <span class="noti-dot bg-danger rounded-pill">{{ $notif->count() }}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown-v">
@@ -52,82 +71,46 @@
                             <div class="col">
                                 <h5 class="m-0 font-size-15"> Notifications </h5>
                             </div>
-                            <div class="col-auto">
-                                <a href="#!" class="small fw-semibold text-decoration-underline"> Mark all as read</a>
-                            </div>
+                            
                         </div>
                     </div>
                     <div data-simplebar style="max-height: 250px;">
-                        <a href="#!" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 me-3">
-                                    <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <p class="text-muted font-size-13 mb-0 float-end">1 hour ago</p>
-                                    <h6 class="mb-1">James Lemire</h6>
-                                    <div>
-                                        <p class="mb-0">It will seem like simplified English.</p>
+                        @foreach ($notif->get() as $nf)
+                            @php
+                                $created = Carbon::parse($nf->created_at);
+                                $now = Carbon::now();
+                                $diffInDays = $now->diffInDays($created);
+                                $formattedDate = $diffInDays > 3 ? $created->format('M d, Y h:i A') : $created->diffForHumans();
+                            @endphp
+                            <a wire:navigate href="{{ route('view-application', ['id' => $aes->encrypt($nf->id)]) }}?{{ \Str::random(20) }}" class="text-reset notification-item">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 avatar-sm me-3">
+                                        <span class="avatar-title bg-success rounded-circle font-size-18">
+                                            <i class="bx bx-badge-check"></i>
+                                        </span>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <p class="text-muted font-size-13 mb-0 float-end">{{ $formattedDate }}</p>
+                                        <h6 class="mb-1">{{ $nf->applicant }}</h6>
+                                        <div>
+                                            <p class="mb-0">
+                                                @if($nf->status == 0 || $nf->status == 1)
+                                                    New Franchise Application! Check it now
+                                                @endif
+                                                @if($nf->status == 3 || $nf->status == 4)
+                                                    New Franchise Renewal! Check it now
+                                                @endif
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
+                            </a>
+                        @endforeach
+                    </div>
                     
-                            </div>
-                        </a>
-                        <a href="#!" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 avatar-sm me-3">
-                                    <span class="avatar-title bg-primary rounded-circle font-size-18">
-                                        <i class="bx bx-cart"></i>
-                                    </span>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <p class="text-muted font-size-13 mb-0 float-end">3 min ago</p>
-                                    <h6 class="mb-1">Your order is placed</h6>
-                                    <div>
-                                        <p class="mb-0">If several languages coalesce the grammar</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#!" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 avatar-sm me-3">
-                                    <span class="avatar-title bg-success rounded-circle font-size-18">
-                                        <i class="bx bx-badge-check"></i>
-                                    </span>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <p class="text-muted font-size-13 mb-0 float-end">8 min ago</p>
-                                    <h6 class="mb-1">Your item is shipped</h6>
-                                    <div>
-                                        <p class="mb-0">If several languages coalesce the grammar</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="#!" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 me-3">
-                                    <img src="assets/images/users/avatar-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <p class="text-muted font-size-13 mb-0 float-end">1 hour ago</p>
-                                    <h6 class="mb-1">Salena Layfield</h6>
-                                    <div>
-                                        <p class="mb-1">As a skeptical Cambridge friend of mine occidental.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 btn-block text-center" href="javascript:void(0)">
-                            <i class="uil-arrow-circle-right me-1"></i> <span>View More..</span>
-                        </a>
-                    </div>
                 </div>
             </div>
+            @endif
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown-v"
@@ -138,7 +121,7 @@
                     <span class="d-none d-xl-inline-block ms-2 fw-medium font-size-15">{{ Auth::user()->name }}</span>
                     @endif
                     @if(Auth::user()->role == 2)
-                    <span class="d-none d-xl-inline-block ms-2 fw-medium font-size-15">{{ Auth::user()->email }} {{ ucwords(Auth::user()->categories->color) }}</span>
+                    <span class=" ms-2 fw-medium font-size-15">{{ Auth::user()->email }} {{ ucwords(Auth::user()->categories->color) }}</span>
                     @endif
                 </button>
                 <div class="dropdown-menu dropdown-menu-end pt-0">
@@ -152,7 +135,10 @@
                         <p class="mb-0 font-size-11 text-muted">{{ Auth::user()->email }}</p>
                         @endif
                     </div>
-                    <a class="dropdown-item" href="contacts-profile.html"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Profile</span></a>
+                    <a class="dropdown-item" href="javascript:;" id="profile" data-name="{{ Auth::user()->name }}" data-email="{{ Auth::user()->email }}"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Profile</span></a>
+                    @if(Auth::user()->role == 1)
+                    <a class="dropdown-item" href="javascript:;" id="sms-token" data-token="{{ $smsToken->access_token }}" data-mobile="{{ $smsToken->mobile_identity }}"><i class="bx bxs-message-dots text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">SMS Token</span></a>
+                    @endif
                     <a class="dropdown-item" href="javascript:;" id="sign-out"><i class="mdi mdi-logout text-muted font-size-16 align-middle me-2"></i> <span class="align-middle">Logout</span></a>
                 </div>
             </div>

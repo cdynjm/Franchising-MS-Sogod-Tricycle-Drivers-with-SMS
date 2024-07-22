@@ -151,6 +151,14 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div>
+                                                            <b>Proof of Citizenship</b>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="" style="font-size: 13px;">Valid ID</label>
+                                                            <input type="file" name="validID" class="form-control" accept=".jpg, .png, .jpeg, .webp">
+                                                        </div>
+                                                        <hr>
+                                                        <div>
                                                             <b>TODA Clearance Certification</b>
                                                         </div>
                                                         <div class="mb-3">

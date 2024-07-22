@@ -43,6 +43,7 @@
         <script src="https://cdn.lordicon.com/lordicon.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        
 
         @if(Auth::check())
         <script src="{{ asset('storage/js/signout.js?id=04062024') }}" data-navigate-once></script>

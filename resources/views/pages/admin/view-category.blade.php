@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        @include('data.admin.view-category-data')
+                                        @livewire('view-category-data', ['category' => $aes->encrypt($category->id)])
                                     </div>
                                 </div>
                                 </div>

@@ -1,3 +1,13 @@
+@php
+    use App\Models\Franchise;
+
+    $newApplication = Franchise::where('status', 0)
+            ->orWhere('status', 1)->count();
+    $renewal = Franchise::where('status', 3)
+            ->orWhere('status', 4)->count();
+
+@endphp
+
 <style>
     /* Default styles for the sidebar list items */
 .vertical-menu .metismenu li a {
@@ -67,6 +77,9 @@
                     <a wire:navigate href="{{ route('admin.renewal') }}">
                         <i class="fas fa-redo-alt icon nav-icon"></i>
                         <span class="menu-item">Renewal</span>
+                        @if($renewal != 0)
+                        <span class="badge rounded-pill bg-danger">{{ $renewal }}</span>
+                        @endif
                     </a>
                 </li>
 
@@ -74,6 +87,9 @@
                     <a wire:navigate href="{{ route('admin.new-application') }}">
                         <i class="fas fa-folder fs-5 icon nav-icon"></i>
                         <span class="menu-item">New Application</span>
+                        @if($newApplication != 0)
+                        <span class="badge rounded-pill bg-danger">{{ $newApplication }}</span>
+                        @endif
                     </a>
                 </li>
                 @endif

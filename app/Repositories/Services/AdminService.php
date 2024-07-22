@@ -95,7 +95,7 @@ class AdminService implements AdminInterface {
                     ->where('status', '!=', 5)
                     ->where('isActive', '!=', 5)
                     ->orderBy('code')
-                    ->get();
+                    ->paginate(3);
     }
     /**
      * Handle an incoming request.

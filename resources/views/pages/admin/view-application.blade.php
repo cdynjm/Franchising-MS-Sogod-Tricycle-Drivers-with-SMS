@@ -49,6 +49,7 @@
                                 </div>
                                 <div class="card-body">
                                     <input type="hidden" class="form-control text-uppercase" value="{{ $aes->encrypt($application->id) }}" name="id" readonly>
+                                    <input type="hidden" class="form-control text-uppercase" value="{{ $aes->encrypt($application->userID) }}" name="userID" readonly>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-3">
@@ -133,35 +134,41 @@
                                         <div class="row text-center mt-4">
                                             <div class="col-md-6">
                                                 <div class="mb-4">
+                                                    <b>Proof of Citizenship</b>
+                                                    <p class="mb-2">Valid ID</p>
+                                                    <img src="{{ asset('storage/files/'.$application->validID) }}" alt="" class="img-fluid rounded-2 shadow-lg">    
+                                                </div>
+                                                <hr>
+                                                <div class="mb-4">
                                                     <b>TODA Clearance Certification</b>
                                                     <p class="mb-2">Front or 1st Page</p>
-                                                    <img src="{{ asset('storage/files/'.$application->clearanceFront) }}" alt="" class="img-fluid">    
+                                                    <img src="{{ asset('storage/files/'.$application->clearanceFront) }}" alt="" class="img-fluid rounded-2 shadow-lg">    
                                                 </div>
                                                 <div class="mb-4">
                                                     <p class="mb-2">Back or 2nd Page</p>
-                                                    <img src="{{ asset('storage/files/'.$application->clearanceBack) }}" alt="" class="img-fluid">    
+                                                    <img src="{{ asset('storage/files/'.$application->clearanceBack) }}" alt="" class="img-fluid rounded-2 shadow-lg">    
                                                 </div>
                                                 <hr>
                                                 <div class="mb-4">
                                                     <div class="mb-2 fw-bold">Official Receipt (OR)</div>
-                                                    <img src="{{ asset('storage/files/'.$application->officialReceipt) }}" alt="" class="img-fluid">    
+                                                    <img src="{{ asset('storage/files/'.$application->officialReceipt) }}" alt="" class="img-fluid rounded-2 shadow-lg">    
                                                 </div>
                                                 <hr class="d-lg-none d-sm-block">
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="mb-4">
                                                     <div class="mb-2 fw-bold">Certificate of Registration (CR)</div>
-                                                    <img src="{{ asset('storage/files/'.$application->certificate) }}" alt="" class="img-fluid">    
+                                                    <img src="{{ asset('storage/files/'.$application->certificate) }}" alt="" class="img-fluid rounded-2 shadow-lg">    
                                                 </div>
                                                 <hr>
                                                 <div class="mb-4">
                                                     <b>Drivers Identification Card</b>
                                                     <p class="mb-2">Front</p>
-                                                    <img src="{{ asset('storage/files/'.$application->cardFront) }}" alt="" class="img-fluid">    
+                                                    <img src="{{ asset('storage/files/'.$application->cardFront) }}" alt="" class="img-fluid rounded-2 shadow-lg">    
                                                 </div>
                                                 <div class="mb-4">
                                                     <p class="mb-2">Back</p>
-                                                    <img src="{{ asset('storage/files/'.$application->cardBack) }}" alt="" class="img-fluid">    
+                                                    <img src="{{ asset('storage/files/'.$application->cardBack) }}" alt="" class="img-fluid rounded-2 shadow-lg">    
                                                 </div>
                                             </div>
                                         </div>

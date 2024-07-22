@@ -14,12 +14,14 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Response;
 
 use App\Http\Controllers\AESCipher;
+use App\Http\Controllers\SMSController;
 
 use App\Repositories\Interfaces\AdminInterface;
 
 use App\Models\User;
 use App\Models\Categories;
 use App\Models\Franchise;
+use App\Models\SMSToken;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -32,7 +34,8 @@ class AdminController extends Controller
      */
     public function __construct(
         protected AESCipher $aes, 
-        protected AdminInterface $AdminInterface
+        protected AdminInterface $AdminInterface,
+        protected SMSController $sms
     ) {}
     /**
      * Handle an incoming request.
@@ -149,9 +152,10 @@ class AdminController extends Controller
      */
     public function confirmFranchiseApplication(Request $request) {
 
+        $franchise = Franchise::where('id', $this->aes->decrypt($request->id))->first();
+
         $year = date('Y') + 1;
 
-        $franchise = Franchise::where('id', $this->aes->decrypt($request->id))->first();
         User::where('id', $franchise->userID)->update(['status' => 1]);
         $unit = User::where('id', $franchise->userID)->first();
 
@@ -161,6 +165,8 @@ class AdminController extends Controller
             'expiresOn' => $year.'-'.date('m-d H:i:s'),
             'created_at' => date('Y-m-d H:i:s')
         ]);
+
+        $this->sms->SMSConfirmApplication($franchise);
 
         return response()->json([
             'Message' => 'Franchise Application confirmed successfully for payment & signature. You can download and print the forms as follows:'
@@ -180,6 +186,9 @@ class AdminController extends Controller
 
         $franchise = Franchise::where('id', $this->aes->decrypt($request->id))->first();
 
+        $this->sms->SMSApproveApplication($franchise);
+
+        File::delete(public_path("storage/files/{$franchise->validID}"));
         File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
         File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
         File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
@@ -200,6 +209,9 @@ class AdminController extends Controller
 
         $franchise = Franchise::where('id', $this->aes->decrypt($request->id))->first();
 
+        $this->sms->SMSRejectApplication($franchise);
+
+        File::delete(public_path("storage/files/{$franchise->validID}"));
         File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
         File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
         File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
@@ -227,6 +239,8 @@ class AdminController extends Controller
         $franchise = Franchise::where('id', $this->aes->decrypt($request->id))->first();
         $unit = User::where('id', $franchise->userID)->first();
 
+        $this->sms->SMSConfirmRenewal($franchise);
+
         Franchise::where('id', $this->aes->decrypt($request->id))->update([
             'status' => 4,
             'caseNumber' => 'SO-'.date('Y').'-'.sprintf('%04d', $unit->name),
@@ -252,6 +266,9 @@ class AdminController extends Controller
 
         $franchise = Franchise::where('id', $this->aes->decrypt($request->id))->first();
 
+        $this->sms->SMSApproveRenewal($franchise);
+
+        File::delete(public_path("storage/files/{$franchise->validID}"));
         File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
         File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
         File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
@@ -272,6 +289,9 @@ class AdminController extends Controller
 
         $franchise = Franchise::where('id', $this->aes->decrypt($request->id))->first();
 
+        $this->sms->SMSRejectRenewal($franchise);
+
+        File::delete(public_path("storage/files/{$franchise->validID}"));
         File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
         File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
         File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
@@ -281,10 +301,15 @@ class AdminController extends Controller
 
         Franchise::where('id', $this->aes->decrypt($request->id))->delete();
         
-        Franchise::where('userID', Auth::user()->id)->update([
-            'status' => 2,
-            'isActive' => 0
-        ]);
+        $previousFranchise = Franchise::where('userID', $this->aes->decrypt($request->userID))
+                    ->orderBy('expiresOn', 'DESC')->first();
+
+        if ($previousFranchise) {
+            $previousFranchise->update([
+                'status' => 2,
+                'isActive' => 0
+            ]);
+        }
 
         return response()->json([
             'Message' => 'Franchise Renewal has been rejected and deleted successfully!'
@@ -297,18 +322,59 @@ class AdminController extends Controller
      */
     public function viewCategory(Request $request) {
         $category = $this->AdminInterface->getCategory($request);
-        $users = $this->AdminInterface->categoryUsers($request);
-        return view('pages.admin.view-category', compact('category', 'users'));
+        return view('pages.admin.view-category', ['category' => $category]);
     }
-     /**
+    /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function viewFranchiseHistory(Request $request) {
         $account = $this->AdminInterface->getAccount($request);
-        $franchise = $this->AdminInterface->franchiseHistory($request);
-        return view('pages.admin.view-franchise-history', compact('account', 'franchise'));
+        return view('pages.admin.view-franchise-history', ['account' => $account]);
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function updateProfile(Request $request) {
+       
+        if(Validator::make($request->all(), [
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users')->ignore(Auth::user()->id)
+            ]
+        ])->fails()) { 
+            return response()->json(['Message' => 'Email is already taken'], Response::HTTP_INTERNAL_SERVER_ERROR);
+         }
+
+        Auth::user()->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        if(!empty($request->password)) {
+            Auth::user()->update(['password' => Hash::make($request->password)]);
+        }
+        
+        return response()->json(['Message' => 'Your profile has been updated successfully!'], Response::HTTP_OK);
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function smsToken(Request $request) {
+       
+        SMSToken::where('id', 1)->update([
+            'access_token' => $request->token,
+            'mobile_identity' => $request->mobile
+        ]);
+        
+        return response()->json(['Message' => 'Your SMS token has been updated successfully!'], Response::HTTP_OK);
     }
 }
 

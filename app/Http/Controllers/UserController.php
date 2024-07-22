@@ -75,6 +75,10 @@ class UserController extends Controller
         
         $timestamp = Carbon::now();
 
+        $validIDExtension = $request->file('validID')->getClientOriginalExtension();
+        $validIDFileName = \Str::slug($request->username.'-valid-id-'.$timestamp).'.'.$validIDExtension;
+        $transferfile = $request->validID->storeAs('public/files/', $validIDFileName); 
+
         $clearanceFrontExtension = $request->file('clearanceFront')->getClientOriginalExtension();
         $clearanceFrontFileName = \Str::slug(Auth::user()->email.'-clearance-front-'.$timestamp).'.'.$clearanceFrontExtension;
         $transferfile = $request->clearanceFront->storeAs('public/files/', $clearanceFrontFileName); 
@@ -110,6 +114,7 @@ class UserController extends Controller
             'motorNumber' => strtoupper($request->motorNumber),
             'chassisNumber' => strtoupper($request->chassisNumber),
             'plateNumber' => strtoupper($request->plateNumber),
+            'validID' => $validIDFileName,
             'clearanceFront' => $clearanceFrontFileName,
             'clearanceBack' => $clearanceBackFileName,
             'officialReceipt' => $officialReceiptFileName,
@@ -143,5 +148,18 @@ class UserController extends Controller
         $application = $this->UserInterface->application($request);
         $categories = $this->UserInterface->categories();
         return view('pages.user.view-application', compact('application', 'categories'));
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function updateProfile(Request $request) {
+
+        if(!empty($request->password)) {
+            Auth::user()->update(['password' => Hash::make($request->password)]);
+        }
+        
+        return response()->json(['Message' => 'Your password has been updated successfully!'], Response::HTTP_OK);
     }
 }

@@ -22,6 +22,7 @@ class Franchise extends Model
         'motorNumber',
         'chassisNumber',
         'plateNumber',
+        'validID',
         'clearanceFront',
         'clearanceBack',
         'officialReceipt',

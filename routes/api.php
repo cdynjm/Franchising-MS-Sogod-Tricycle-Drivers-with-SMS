@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::patch('/approve-franchise-application', [AdminController::class, 'approveFranchiseApplication']);
             Route::patch('/confirm-franchise-renewal', [AdminController::class, 'confirmFranchiseRenewal']);
             Route::patch('/approve-franchise-renewal', [AdminController::class, 'approveFranchiseRenewal']);
+            Route::patch('/profile', [AdminController::class, 'updateProfile']);
+            Route::patch('/sms-token', [AdminController::class, 'smsToken']);
         });
         
         Route::group(['prefix' => 'delete'], function () {
@@ -49,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::group(['prefix' => 'update'], function () {
             Route::patch('/submit-renewal', [UserController::class, 'submitRenewal']);
+            Route::patch('/user-profile', [UserController::class, 'updateProfile']);
         });
         
         Route::group(['prefix' => 'delete'], function () {
