@@ -10,14 +10,8 @@
         @php $count = 1; @endphp
         @foreach ($categories as $cat)
             <tr>
-                <td
-                
-                id="{{ $aes->encrypt($cat->id) }}"
-                category="{{ $cat->category }}"
-                color="{{ $cat->color }}"
-                description="{{ $cat->description }}"
-
-                >{{ $count++ }}</td>
+                <td id="{{ $aes->encrypt($cat->id) }}" category="{{ $cat->category }}" color="{{ $cat->color }}"
+                    description="{{ $cat->description }}">{{ $count++ }}</td>
                 <td>{{ $cat->category }}</td>
                 <td>{{ $cat->color }}</td>
                 <td>{{ $cat->description }}</td>
@@ -31,7 +25,7 @@
                 </td>
             </tr>
         @endforeach
-        @if($count == 1)
+        @if ($count == 1)
             <tr>
                 <td class="text-center" colspan="4">No Data Found</td>
             </tr>

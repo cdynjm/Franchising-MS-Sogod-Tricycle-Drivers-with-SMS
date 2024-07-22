@@ -43,6 +43,12 @@ class AdminController extends Controller
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function dashboard() {
+
+        Franchise::where('expiresOn', '<', date('Y-m-d H:i:s'))
+                ->where('isActive', '!=', 5)
+                ->where('status', '!=', 5)
+                ->update(['isActive' => 0]);
+
         $categories = $this->AdminInterface->categoriesCount();
         return view('pages.admin.dashboard', compact('categories'));
     }
@@ -188,13 +194,19 @@ class AdminController extends Controller
 
         $this->sms->SMSApproveApplication($franchise);
 
-        File::delete(public_path("storage/files/{$franchise->validID}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
-        File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
-        File::delete(public_path("storage/files/{$franchise->certificate}"));
-        File::delete(public_path("storage/files/{$franchise->cardFront}"));
-        File::delete(public_path("storage/files/{$franchise->cardBack}"));
+        $files = [
+            $franchise->validID,
+            $franchise->clearanceFront,
+            $franchise->clearanceBack,
+            $franchise->officialReceipt,
+            $franchise->certificate,
+            $franchise->cardFront,
+            $franchise->cardBack,
+        ];
+        
+        foreach ($files as $file) {
+            File::delete(public_path("storage/files/{$file}"));
+        }
 
         return response()->json([
             'Message' => 'Franchise Application has been approved successfully!'
@@ -211,13 +223,19 @@ class AdminController extends Controller
 
         $this->sms->SMSRejectApplication($franchise);
 
-        File::delete(public_path("storage/files/{$franchise->validID}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
-        File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
-        File::delete(public_path("storage/files/{$franchise->certificate}"));
-        File::delete(public_path("storage/files/{$franchise->cardFront}"));
-        File::delete(public_path("storage/files/{$franchise->cardBack}"));
+        $files = [
+            $franchise->validID,
+            $franchise->clearanceFront,
+            $franchise->clearanceBack,
+            $franchise->officialReceipt,
+            $franchise->certificate,
+            $franchise->cardFront,
+            $franchise->cardBack,
+        ];
+        
+        foreach ($files as $file) {
+            File::delete(public_path("storage/files/{$file}"));
+        }
 
         Franchise::where('id', $this->aes->decrypt($request->id))->delete();
         User::where('id', $franchise->userID)->delete();
@@ -268,13 +286,19 @@ class AdminController extends Controller
 
         $this->sms->SMSApproveRenewal($franchise);
 
-        File::delete(public_path("storage/files/{$franchise->validID}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
-        File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
-        File::delete(public_path("storage/files/{$franchise->certificate}"));
-        File::delete(public_path("storage/files/{$franchise->cardFront}"));
-        File::delete(public_path("storage/files/{$franchise->cardBack}"));
+        $files = [
+            $franchise->validID,
+            $franchise->clearanceFront,
+            $franchise->clearanceBack,
+            $franchise->officialReceipt,
+            $franchise->certificate,
+            $franchise->cardFront,
+            $franchise->cardBack,
+        ];
+        
+        foreach ($files as $file) {
+            File::delete(public_path("storage/files/{$file}"));
+        }
 
         return response()->json([
             'Message' => 'Franchise Renewal has been approved successfully!'
@@ -291,13 +315,19 @@ class AdminController extends Controller
 
         $this->sms->SMSRejectRenewal($franchise);
 
-        File::delete(public_path("storage/files/{$franchise->validID}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceFront}"));
-        File::delete(public_path("storage/files/{$franchise->clearanceBack}"));
-        File::delete(public_path("storage/files/{$franchise->officialReceipt}"));
-        File::delete(public_path("storage/files/{$franchise->certificate}"));
-        File::delete(public_path("storage/files/{$franchise->cardFront}"));
-        File::delete(public_path("storage/files/{$franchise->cardBack}"));
+        $files = [
+            $franchise->validID,
+            $franchise->clearanceFront,
+            $franchise->clearanceBack,
+            $franchise->officialReceipt,
+            $franchise->certificate,
+            $franchise->cardFront,
+            $franchise->cardBack,
+        ];
+        
+        foreach ($files as $file) {
+            File::delete(public_path("storage/files/{$file}"));
+        }
 
         Franchise::where('id', $this->aes->decrypt($request->id))->delete();
         
