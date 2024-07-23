@@ -20,7 +20,7 @@ use App\Repositories\Interfaces\UserInterface;
 use App\Models\User;
 use App\Models\Categories;
 use App\Models\Franchise;
-
+use App\Models\Signature;
 
 class UserService implements UserInterface {
     /**
@@ -76,6 +76,14 @@ class UserService implements UserInterface {
      */
     public function application($request) {
         return Franchise::where('id', $this->aes->decrypt($request->id))->first();
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function signature() {
+        return Signature::where('id', 1)->first();
     }
 }
 

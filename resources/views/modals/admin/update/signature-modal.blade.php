@@ -1,12 +1,12 @@
-<div class="modal fade" id="create-category-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="signature-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Create Category</h5>
+                <h5 class="modal-title" id="myModalLabel">Update Persons</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" id="create-category">
+            <form action="" id="update-signature">
                 <div class="modal-body">
 
                     <div class="processing alert p-1 alert-sm alert-success align-items-center" style="display: none">
@@ -16,14 +16,13 @@
                         <div class="text-secondary" style="font-size: 13px;">Loading...</div>
                     </div>
 
-                    <label for="" style="font-size: 12px;">Category Name</label>
-                    <input type="text" name="category" pattern="[a-zA-Z]" maxlength="1" class="form-control mb-2" required>
+                    <label for="" style="font-size: 12px;">Current Municipal Mayor</label>
+                    <input type="text" name="mayor" id="mayor" class="form-control text-uppercase mb-2" required>
 
-                    <label for="" style="font-size: 12px;">Color Code</label>
-                    <input type="text" name="color" class="form-control mb-2" required>
+                    <label for="" style="font-size: 12px;">Current Chief of Police</label>
+                    <input type="text" name="police" id="police" class="form-control text-uppeercase mb-2" required>
 
-                    <label for="" style="font-size: 12px;">Description/Route</label>
-                    <input type="text" name="description" class="form-control" required>
+        
 
                 </div>
                 <div class="modal-footer">

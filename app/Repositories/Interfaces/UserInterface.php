@@ -12,7 +12,9 @@ interface UserInterface {
 
     public function franchiseHistory($request);
     
-   public function application($request);
+    public function application($request);
+
+    public function signature();
 }
 
 ?>

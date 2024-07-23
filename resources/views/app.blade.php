@@ -1,9 +1,5 @@
 <!doctype html>
 <html lang="en">
-
-
-<!-- Mirrored from themesdesign.in/webadmin/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Jun 2024 08:58:18 GMT -->
-
 <head>
 
     <meta charset="utf-8" />
@@ -46,7 +42,7 @@
     <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js" data-navigate-once></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" data-navigate-once></script>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js" data-navigate-once></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 
@@ -92,9 +88,6 @@
 
     <script src="/assets/js/pages/dashboard.init.js"></script>
 
-    <!-- datepicker js -->
-    <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
-
     <!-- form wizard init -->
     <script src="/assets/js/pages/form-wizard.init.js"></script>
 
@@ -104,8 +97,6 @@
         @endif
     @endif
 
-    <script src="/assets/js/pages/form-validation.init.js"></script>
-
     <script src="/assets/js/pages/dashboard-sales.init.js"></script>
 
     <script src="/assets/js/app.js"></script>
@@ -114,8 +105,4 @@
 
     @livewireScripts
 </body>
-
-
-<!-- Mirrored from themesdesign.in/webadmin/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 21 Jun 2024 08:58:18 GMT -->
-
 </html>

@@ -95,6 +95,6 @@
     </table>
 
     <div>
-        {{ $users->links() }}
+        {{ $users->links('vendor.livewire.custom-pagination') }}
     </div>
 </div>

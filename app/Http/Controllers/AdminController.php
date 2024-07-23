@@ -22,6 +22,7 @@ use App\Models\User;
 use App\Models\Categories;
 use App\Models\Franchise;
 use App\Models\SMSToken;
+use App\Models\Signature;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -98,6 +99,30 @@ class AdminController extends Controller
         $application = $this->AdminInterface->application($request);
         return view('pages.admin.form.application-form', ['application' => $application]);
     }
+    /* Handle an incoming request.
+    *
+    * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+    */
+   public function permitForm(Request $request) {
+       $application = $this->AdminInterface->application($request);
+       return view('pages.admin.form.permit-form', ['application' => $application]);
+   }
+   /* Handle an incoming request.
+    *
+    * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+    */
+    public function confirmationForm(Request $request) {
+        $application = $this->AdminInterface->application($request);
+        return view('pages.admin.form.confirmation-form', ['application' => $application]);
+    }
+    /* Handle an incoming request.
+    *
+    * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+    */
+    public function provisionalForm(Request $request) {
+        $application = $this->AdminInterface->application($request);
+        return view('pages.admin.form.provisional-form', ['application' => $application]);
+    }
     /**
      * Handle an incoming request.
      *
@@ -106,8 +131,8 @@ class AdminController extends Controller
     public function createCategory(Request $request) {
 
         Categories::create([
-            'category' => $request->category,
-            'color' => $request->color,
+            'category' => strtoupper($request->category),
+            'color' => ucwords($request->color),
             'description' => $request->description
         ]);
         $aes = $this->aes;
@@ -125,8 +150,8 @@ class AdminController extends Controller
     public function updateCategory(Request $request) {
 
         Categories::where('id', $this->aes->decrypt($request->id))->update([
-            'category' => $request->category,
-            'color' => $request->color,
+            'category' => strtoupper($request->category),
+            'color' => ucwords($request->color),
             'description' => $request->description
         ]);
         $aes = $this->aes;
@@ -405,6 +430,20 @@ class AdminController extends Controller
         ]);
         
         return response()->json(['Message' => 'Your SMS token has been updated successfully!'], Response::HTTP_OK);
+    }
+     /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function updateSignature(Request $request) {
+       
+        Signature::where('id', 1)->update([
+            'mayor' => strtoupper($request->mayor),
+            'police' => strtoupper($request->police)
+        ]);
+        
+        return response()->json(['Message' => 'Persons has been updated successfully!'], Response::HTTP_OK);
     }
 }
 

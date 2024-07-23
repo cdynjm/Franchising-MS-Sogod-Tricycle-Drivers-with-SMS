@@ -21,8 +21,13 @@ class ViewCategoryData extends Component
                     ->where('status', '!=', 5)
                     ->where('isActive', '!=', 5)
                     ->orderBy('code')
-                    ->paginate(10);
-        
-        return view('livewire.view-category-data', ['users' => $users, 'aes' => $aes]);
+                    ->paginate(50);
+
+        return view('livewire.view-category-data', ['users' => $users, 'aes' => $aes])->section('content');
+    }
+
+    public function paginationView()
+    {
+        return 'vendor.livewire.custom-pagination';
     }
 }

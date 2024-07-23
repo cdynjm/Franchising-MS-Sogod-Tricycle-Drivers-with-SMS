@@ -35,10 +35,13 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::get('/renewal', [AdminController::class, 'renewal'])->name('admin.renewal');
 			Route::get('/new-application', [AdminController::class, 'newApplication'])->name('admin.new-application');
 			Route::get('/view-application/{id}', [AdminController::class, 'viewApplication'])->name('view-application');
-			Route::post('/application-form', [AdminController::class, 'applicationForm'])->name('application-form');
 			Route::get('/view-category/{id}', [AdminController::class, 'viewCategory'])->name('admin.view-category');
 			Route::get('/view-franchise-history/{id}', [AdminController::class, 'viewFranchiseHistory'])->name('view-franchise-history');
 
+			Route::post('/application-form', [AdminController::class, 'applicationForm'])->name('application-form');
+			Route::post('/permit-form', [AdminController::class, 'permitForm'])->name('permit-form');
+			Route::post('/confirmation-form', [AdminController::class, 'confirmationForm'])->name('confirmation-form');
+			Route::post('/provisional-form', [AdminController::class, 'provisionalForm'])->name('provisional-form');
 		});
 	});
 

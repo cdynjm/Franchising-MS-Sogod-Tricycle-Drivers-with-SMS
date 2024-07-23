@@ -36,25 +36,21 @@
                                             $percentageRemaining = 0;
 
                                             if ($user->status == 2 && $user->isActive == 1) {
-                                                // Determine if the current year is a leap year
                                                 $year = $today->format('Y');
                                                 $totalDaysInYear =
                                                     $year % 4 == 0 && ($year % 100 != 0 || $year % 400 == 0)
                                                         ? 366
                                                         : 365;
 
-                                                // Calculate days remaining only if the expiration date has not passed
                                                 if ($expiresOn >= $today) {
                                                     $daysRemaining = $expiresOn->diff($today)->format('%a');
 
-                                                    // Ensure daysRemaining doesn't go negative
                                                     if ($daysRemaining < 0) {
                                                         $daysRemaining = 0;
                                                     }
 
                                                     $percentageRemaining = ($daysRemaining / $totalDaysInYear) * 100;
                                                 } else {
-                                                    // If expiration date is in the past, set the percentage remaining to 0
                                                     $percentageRemaining = 0;
                                                 }
                                             }
@@ -80,6 +76,11 @@
                                                     height: 450,
                                                     sparkline: {
                                                         enabled: true
+                                                    },
+                                                    animations: {
+                                                        enabled: true,
+                                                        easing: 'easeinout',
+                                                        speed: 2000
                                                     }
                                                 },
                                                 plotOptions: {
@@ -177,7 +178,7 @@
                                             </p>
                                             @if ($user->status == 2)
                                                 @if ($user->isActive == 0)
-                                                    <button href="javascript:;" class="btn btn-success btn-sm"
+                                                    <button href="javascript:;" class="btn btn-success btn-sm shadow-lg"
                                                         id="renew-franchise">Renew Franchise</button>
                                                 @endif
                                             @endif

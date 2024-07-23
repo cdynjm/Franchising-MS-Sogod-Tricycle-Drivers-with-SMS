@@ -101,6 +101,11 @@
                                 chart: {
                                     height: 390,
                                     type: 'radialBar',
+                                    animations: {
+                                        enabled: true,
+                                        easing: 'easeinout',
+                                        speed: 1500
+                                    }
                                 },
                                 plotOptions: {
                                     radialBar: {
@@ -123,7 +128,7 @@
                                     }
                                 },
                                 stroke: {
-                                    colors: ['#fff']
+                                    colors: ['#fff'],
                                 },
                                 fill: {
                                     opacity: 0.8

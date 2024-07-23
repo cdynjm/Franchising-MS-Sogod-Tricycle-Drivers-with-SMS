@@ -29,6 +29,9 @@ class Franchise extends Model
         'certificate',
         'cardFront',
         'cardBack',
+        'mayor',
+        'police',
+        'payment',
         'status',
         'isActive',
         'expiresOn'

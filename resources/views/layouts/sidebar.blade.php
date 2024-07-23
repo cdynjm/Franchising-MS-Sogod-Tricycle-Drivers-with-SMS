@@ -7,20 +7,19 @@
 @endphp
 
 <style>
-    /* Default styles for the sidebar list items */
+
     .vertical-menu .metismenu li a {
         color: black;
-        /* Default text color */
+
         transition: background-color 0.3s, color 0.3s;
-        /* Smooth transition for color changes */
+
     }
 
-    /* Active state styles for the sidebar list items */
     .vertical-menu .metismenu li.active a {
         color: #000;
-        /* Active text color */
+
         background-color: #e5f1f5;
-        /* Active background color */
+
     }
 </style>
 
@@ -45,7 +44,6 @@
 
         </a>
 
-
     </div>
 
     <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect vertical-menu-btn">
@@ -53,7 +51,6 @@
     </button>
 
     <div data-simplebar class="sidebar-menu-scroll">
-
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">

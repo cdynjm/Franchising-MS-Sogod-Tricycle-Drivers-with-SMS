@@ -60,7 +60,7 @@
                                             <button class="btn btn-sm btn-primary rounded-1 shadow-lg text-white me-2"
                                                 id="renew-franchise"><i class="fas fa-check me-1"></i> Renew</button>
                                         @endif
-                                        @if ($application->status == 4 || $application->status == 5)
+                                        @if ($application->status == 2 || $application->status == 4 || $application->status == 5)
                                             <button class="btn btn-sm btn-danger rounded-1 shadow-lg text-white me-2"
                                                 id="download-forms"><i class="fas fa-folder me-1"></i> Forms</button>
                                         @endif

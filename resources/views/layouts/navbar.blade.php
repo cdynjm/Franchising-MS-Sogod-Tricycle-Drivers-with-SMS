@@ -4,18 +4,20 @@
     use App\Http\Controllers\AESCipher;
     use App\Models\Franchise;
     use App\Models\SMSToken;
+    use App\Models\Signature;
     use Carbon\Carbon;
 
     $smsToken = SMSToken::first();
-
+    $signature = Signature::first();
     $aes = new AESCipher();
 
-    $notif = Franchise::whereIn('status', [0, 1, 3, 4]);
+    $notif = Franchise::whereIn('status', [0, 1, 3, 4])->orderBy('created_at', 'DESC');
 
 @endphp
 
 @extends('modals.profile-modal')
 @extends('modals.admin.update.sms-token-modal')
+@extends('modals.admin.update.signature-modal')
 
 <header id="page-topbar" class="isvertical-topbar">
     <div class="navbar-header">
@@ -122,13 +124,16 @@
                 <button type="button" class="btn header-item user text-start d-flex align-items-center"
                     id="page-header-user-dropdown-v" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ asset('storage/icons/profile.png') }}"
-                        alt="Header Avatar">
+
                     @if (Auth::user()->role == 1)
+                        <img class="rounded-circle header-profile-user" src="{{ asset('storage/icons/admin.png') }}"
+                            alt="Header Avatar">
                         <span
                             class="d-none d-xl-inline-block ms-2 fw-medium font-size-15">{{ Auth::user()->name }}</span>
                     @endif
                     @if (Auth::user()->role == 2)
+                        <img class="rounded-circle header-profile-user" src="{{ asset('storage/icons/driver.png') }}"
+                            alt="Header Avatar">
                         <span class=" ms-2 fw-medium font-size-15">{{ Auth::user()->email }}
                             {{ ucwords(Auth::user()->categories->color) }}</span>
                     @endif
@@ -155,6 +160,11 @@
                             data-mobile="{{ $smsToken->mobile_identity }}"><i
                                 class="bx bxs-message-dots text-muted font-size-16 align-middle me-2"></i> <span
                                 class="align-middle">SMS Token</span></a>
+                        <a class="dropdown-item" href="javascript:;" id="signature"
+                            data-mayor="{{ $signature->mayor }}"
+                            data-police="{{ $signature->police }}"><i
+                                class="bx bxs-pen text-muted font-size-16 align-middle me-2"></i> <span
+                                class="align-middle">Signatures</span></a>
                     @endif
                     <a class="dropdown-item" href="javascript:;" id="sign-out"><i
                             class="mdi mdi-logout text-muted font-size-16 align-middle me-2"></i> <span

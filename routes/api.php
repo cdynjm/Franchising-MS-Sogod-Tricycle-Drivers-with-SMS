@@ -33,6 +33,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::patch('/approve-franchise-renewal', [AdminController::class, 'approveFranchiseRenewal']);
             Route::patch('/profile', [AdminController::class, 'updateProfile']);
             Route::patch('/sms-token', [AdminController::class, 'smsToken']);
+            Route::patch('/signature', [AdminController::class, 'updateSignature']);
+
         });
         
         Route::group(['prefix' => 'delete'], function () {

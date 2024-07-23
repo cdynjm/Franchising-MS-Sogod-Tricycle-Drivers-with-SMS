@@ -19,7 +19,11 @@ class ViewFranchiseHistoryData extends Component
         $aes = new AESCipher;
         $franchise = Franchise::where('userID', $aes->decrypt($this->accountID))
                             ->orderBy('created_at', 'DESC')
-                            ->paginate(20);
-        return view('livewire.view-franchise-history-data', ['aes' => $aes, 'franchise' => $franchise]);
+                            ->paginate(50);
+        return view('livewire.view-franchise-history-data', ['aes' => $aes, 'franchise' => $franchise])->section('content');
+    }
+    public function paginationView()
+    {
+        return 'vendor.livewire.custom-pagination';
     }
 }

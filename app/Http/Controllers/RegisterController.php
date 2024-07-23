@@ -35,7 +35,7 @@ class RegisterController extends Controller
      */
     public function __construct(
         protected AESCipher $aes, 
-        protected userInterface $UserInterface
+        protected UserInterface $UserInterface
     ) {}
     /**
      * Handle an incoming request.
@@ -120,6 +120,8 @@ class RegisterController extends Controller
             'certificate' => $certificateFileName,
             'cardFront' => $cardFrontFileName,
             'cardBack' => $cardBackFileName,
+            'mayor' => $this->UserInterface->signature()->mayor,
+            'police' => $this->UserInterface->signature()->police,
             'status' => 0,
             'isActive' => 0,
          ]);

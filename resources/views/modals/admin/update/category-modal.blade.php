@@ -19,7 +19,7 @@
                     <input type="hidden" class="form-control" name="id" readonly>
 
                     <label for="" style="font-size: 12px;">Category Name</label>
-                    <input type="text" name="category" class="form-control mb-2" required>
+                    <input type="text" name="category" pattern="[a-zA-Z]" maxlength="1" class="form-control mb-2" required>
 
                     <label for="" style="font-size: 12px;">Color Code</label>
                     <input type="text" name="color" class="form-control mb-2" required>
