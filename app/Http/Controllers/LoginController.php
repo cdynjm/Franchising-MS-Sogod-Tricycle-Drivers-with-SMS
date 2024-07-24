@@ -24,11 +24,6 @@ class LoginController extends Controller
             $request->authenticate();
             $request->session()->regenerate();
 
-            Franchise::where('expiresOn', '<', date('Y-m-d H:i:s'))
-                ->where('isActive', '!=', 5)
-                ->where('status', '!=', 5)
-                ->update(['isActive' => 0]);
-
             $user = User::where(['id' => Auth::user()->id])->first();
             $authToken = $user->createToken(\Str::random(50))->plainTextToken;
             $request->session()->put('token', $authToken);

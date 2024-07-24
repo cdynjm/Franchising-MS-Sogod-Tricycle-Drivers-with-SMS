@@ -47,17 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['middleware' => 'user'], function () {
 
-        Route::group(['prefix' => 'create'], function () {
-           
-        }); 
-
         Route::group(['prefix' => 'update'], function () {
             Route::patch('/submit-renewal', [UserController::class, 'submitRenewal']);
             Route::patch('/user-profile', [UserController::class, 'updateProfile']);
-        });
-        
-        Route::group(['prefix' => 'delete'], function () {
-           
         });
 
     });

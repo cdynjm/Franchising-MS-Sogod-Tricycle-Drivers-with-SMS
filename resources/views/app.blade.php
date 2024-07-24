@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
+
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('storage/logo/logo-sogod.gif') }}">
 
@@ -37,8 +38,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js" data-navigate-once></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" data-navigate-once></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js" data-navigate-once></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js" data-navigate-once>
-    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js" data-navigate-once></script>
     <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js" data-navigate-once></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" data-navigate-once></script>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
@@ -69,18 +69,14 @@
     @livewireStyles
 </head>
 
-
 <body>
 
     @yield('content')
-
-
 
     <!-- JAVASCRIPT -->
     <script src="/assets/libs/metismenujs/metismenujs.min.js"></script>
     <script src="/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="/assets/libs/eva-icons/eva.min.js"></script>
-
 
     <!-- Vector map-->
     <script src="/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
@@ -100,8 +96,6 @@
     <script src="/assets/js/pages/dashboard-sales.init.js"></script>
 
     <script src="/assets/js/app.js"></script>
-
-
 
     @livewireScripts
 </body>

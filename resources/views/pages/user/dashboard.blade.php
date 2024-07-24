@@ -184,8 +184,14 @@
                                             @endif
                                         </div>
                                     </div>
-
-                                    <div class="mt-4 px-1 pt-1">
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <hr class="mb-0 mt-3">
+                                        </div>
+                                        <div class="col-md-4"></div>
+                                    </div>
+                                    <div class="mt-3 px-1 pt-1">
                                         <div class="table-responsive">
                                             <div class="text-center mb-4">
                                                 <button type="button"

@@ -24,10 +24,10 @@
                                         $statusLabels = [
                                             0 => 'text-danger|Pending',
                                             1 => 'text-success|For Payment & Signature/s',
-                                            2 => 'text-primary|Registered',
+                                            2 => 'text-primary|Currently Registered Franchise',
                                             3 => 'text-danger|Renewal',
                                             4 => 'text-success|For Payment & Signature/s',
-                                            5 => 'text-danger|Expired',
+                                            5 => 'text-danger|Invalid/Expired',
                                         ];
                                         [$class, $label] = explode(
                                             '|',

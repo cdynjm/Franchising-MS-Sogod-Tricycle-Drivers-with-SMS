@@ -1,15 +1,15 @@
-<!-- resources/views/vendor/livewire/custom-pagination.blade.php -->
+
 @if ($paginator->hasPages())
     <nav class="d-flex justify-content-between align-items-center">
         <div>
-            {{-- Results Label --}}
+            
             <span class="text-muted me-4 text-nowrap" style="font-size: 13px;">
                 Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }} of {{ $paginator->total() }} results
             </span>
         </div>
         <div>
             <ul class="pagination mb-0">
-                {{-- Previous Page Link --}}
+                
                 @if ($paginator->onFirstPage())
                     <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
                         <span class="page-link" aria-hidden="true">&lsaquo;</span>
@@ -20,14 +20,14 @@
                     </li>
                 @endif
 
-                {{-- Pagination Elements --}}
+                
                 @foreach ($elements as $element)
-                    {{-- "Three Dots" Separator --}}
+                  
                     @if (is_string($element))
                         <li class="page-item disabled" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
                     @endif
 
-                    {{-- Array Of Links --}}
+                  
                     @if (is_array($element))
                         @foreach ($element as $page => $url)
                             @if ($page == $paginator->currentPage())
@@ -42,7 +42,6 @@
                     @endif
                 @endforeach
 
-                {{-- Next Page Link --}}
                 @if ($paginator->hasMorePages())
                     <li class="page-item">
                         <button type="button" class="page-link" wire:click="nextPage" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</button>
@@ -56,7 +55,6 @@
         </div>
     </nav>
 @else
-    <!-- Always show pagination controls even if there are no pages -->
     <nav class="d-flex justify-content-between align-items-center">
         <div>
             <span class="text-muted me-4 text-nowrap" style="font-size: 13px;">Showing 0 to 0 of 0 results</span>

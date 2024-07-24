@@ -44,12 +44,6 @@ class AdminController extends Controller
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function dashboard() {
-
-        Franchise::where('expiresOn', '<', date('Y-m-d H:i:s'))
-                ->where('isActive', '!=', 5)
-                ->where('status', '!=', 5)
-                ->update(['isActive' => 0]);
-
         $categories = $this->AdminInterface->categoriesCount();
         return view('pages.admin.dashboard', compact('categories'));
     }
@@ -154,6 +148,7 @@ class AdminController extends Controller
             'color' => ucwords($request->color),
             'description' => $request->description
         ]);
+
         $aes = $this->aes;
         $categories = $this->AdminInterface->categories();
         return response()->json([

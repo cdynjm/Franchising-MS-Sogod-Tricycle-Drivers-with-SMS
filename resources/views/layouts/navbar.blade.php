@@ -11,6 +11,11 @@
     $signature = Signature::first();
     $aes = new AESCipher();
 
+    Franchise::where('expiresOn', '<', date('Y-m-d H:i:s'))
+                ->where('isActive', '!=', 5)
+                ->where('status', '!=', 5)
+                ->update(['isActive' => 0]);
+                
     $notif = Franchise::whereIn('status', [0, 1, 3, 4])->orderBy('created_at', 'DESC');
 
 @endphp

@@ -10,9 +10,9 @@
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <div class="card">
+                    <div class="card mt-4">
                         <div class="card-header">
-                            <h4 class="card-title mb-0">Franchise Renewal</h4>
+                            <h4 class="card-title mb-0">Franchise Renewal - @if ($unit == 0) <span class="text-success">New Unit</span> @endif @if ($unit == 1) <span class="text-primary">Existing Unit</span> @endif</h4>
                         </div><!-- end card header -->
                         <div class="card-body">
 
