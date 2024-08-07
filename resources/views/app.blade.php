@@ -12,7 +12,7 @@
     <meta content="Themesdesign" name="author" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('storage/logo/logo-sogod.gif') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/logo/logo-sogod.gif') }}">
 
     <!-- plugin css -->
     <link href="/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
@@ -47,16 +47,16 @@
 
 
     @if (Auth::check())
-        <script src="{{ asset('storage/js/signout.js?id=04062024') }}" data-navigate-once></script>
+        <script src="{{ asset('assets/js/signout.js?id=04062024') }}" data-navigate-once></script>
         @if (Auth::user()->role == 1)
-            <script src="{{ asset('storage/js/admin.js?id=07182024') }}" data-navigate-once></script>
+            <script src="{{ asset('assets/js/admin.js?id=07182024') }}" data-navigate-once></script>
         @endif
         @if (Auth::user()->role == 2)
-            <script src="{{ asset('storage/js/user.js?id=07182024') }}" data-navigate-once></script>
+            <script src="{{ asset('assets/js/user.js?id=07182024') }}" data-navigate-once></script>
         @endif
     @else
-        <script src="{{ asset('storage/js/signin.js?id=0718024') }}" data-navigate-once></script>
-        <script src="{{ asset('storage/js/register.js?id=0712024') }}" data-navigate-once></script>
+        <script src="{{ asset('assets/js/signin.js?id=0718024') }}" data-navigate-once></script>
+        <script src="{{ asset('assets/js/register.js?id=0712024') }}" data-navigate-once></script>
     @endif
 
 

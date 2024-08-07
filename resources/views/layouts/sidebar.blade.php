@@ -57,7 +57,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled mt-4" id="side-menu">
                 <li class="menu-title" class="text-dark" data-key="t-menu">Pages</li>
-                @if (Auth::user()->role == 1)
+                @can('accessAdmin', Auth::user())
                     <li class="{{ Route::currentRouteName() == 'admin.dashboard' ? 'active text-dark' : '' }}">
                         <a wire:navigate href="{{ route('admin.dashboard') }}">
                             <i class="bx bxs-home icon nav-icon"></i>
@@ -91,9 +91,9 @@
                             @endif
                         </a>
                     </li>
-                @endif
+                @endcan
 
-                @if (Auth::user()->role == 2)
+                @can('accessUser', Auth::user())
                     <li class="{{ Route::currentRouteName() == 'user.dashboard' ? 'active text-dark' : '' }}">
                         <a wire:navigate href="{{ route('user.dashboard') }}">
                             <i class="bx bxs-home icon nav-icon"></i>
@@ -106,7 +106,7 @@
                             <span class="menu-item">Renewal History</span>
                         </a>
                     </li>
-                @endif
+                @endcan
             </ul>
         </div>
         <!-- Sidebar -->

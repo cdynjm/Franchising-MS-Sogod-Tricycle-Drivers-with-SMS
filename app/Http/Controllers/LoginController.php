@@ -28,7 +28,7 @@ class LoginController extends Controller
             $authToken = $user->createToken(\Str::random(50))->plainTextToken;
             $request->session()->put('token', $authToken);
 
-            return response()->json([], 200);
+            return response()->json([], Response::HTTP_OK);
 
         } catch (ValidationException $e) {
             return response()->json([

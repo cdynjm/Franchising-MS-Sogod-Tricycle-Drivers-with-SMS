@@ -121,6 +121,8 @@ class UserController extends Controller
             'certificate' => $certificateFileName,
             'cardFront' => $cardFrontFileName,
             'cardBack' => $cardBackFileName,
+            'mayor' => $this->UserInterface->signature()->mayor,
+            'police' => $this->UserInterface->signature()->police,
             'status' => 3,
             'isActive' => 0,
          ]);
